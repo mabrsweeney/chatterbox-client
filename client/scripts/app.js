@@ -1,40 +1,68 @@
 // YOUR CODE HERE:
 var app = {
+  constructor(){
+    url = 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages';
+  },
 
   init: function() {
-    $('.username').click(function(){
-      app.handleUsernameClick();
-    });
+    app.fetch();
   },
 
   fetch: function() {
+    // console.log('fetching...');
+    // $.get('http://parse.sfm6.hackreactor.com/chatterbox/classes/messages', 
+    // function({results}){
+    //   for (var i = 0; i < results.length; i++) {
+    //     app.renderMessage(results[i]);
+    //   }
+    // });
     $.ajax({
-      type: 'GET'
-    });
-  },
-
-  send: function(value) {
-    $.ajax({
-    // This is the url you should use to communicate with the parse API server.
       url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
-      type: 'POST',
-      data: value,
-      contentType: 'application/json',
-      success: function (data) {
-        console.log('chatterbox: Message sent');
+      type: 'GET',
+      data: { 
+        order: '-createdAt'
       },
-      error: function (data) {
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-        console.error('chatterbox: Failed to send message', data);
+      contentType: 'json',
+      success: function({results}) {
+        for (var i = 0; i < results.length; i++) {
+          app.renderMessage(results[i]);
+        }
+      },
+      error: function(data) {
+        console.log('error!');
       }
     });
   },
 
+  send: function(value) {
+    $.post('http://parse.sfm6.hackreactor.com/chatterbox/classes/messages', value);
+    // $.ajax({
+    // // This is the url you should use to communicate with the parse API server.
+    //   url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
+    //   type: 'POST',
+    //   data: value,
+    //   contentType: 'application/json',
+    //   success: function (data) {
+    //     console.log('chatterbox: Message sent');
+    //   },
+    //   error: function (data) {
+    //     // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+    //     console.error('chatterbox: Failed to send message', data);
+    //   }
+    // });
+  },
+
   renderMessage: function({username, text, roomname}) {
-    var chat = $(`<div class='chat'>
-                    <a class=username>${username}</a>
-                    <p>${text}</p>
-                  </div>`);
+    var chat = $(`<div class='chat'></div>`);
+    var usrnm = $('<a class=username></a>');
+    var textElem = $('<p></p>');
+    textElem.text(text);
+    usrnm.text(username);
+    chat.append(usrnm);
+    chat.append(textElem);
+    
+
+  
     $('#chats').append(chat);
   },
 
@@ -53,8 +81,14 @@ var app = {
   handleSubmit: function() {
 
   }  
-
-
-
 };
 
+$(document).ready(function(){
+  console.log('document ready');
+  app.init();
+
+  // setInterval(function(){
+  //   console.log('fetching...')
+  //   app.fetch();
+  // }, 2000);
+});
