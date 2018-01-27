@@ -1,0 +1,16 @@
+priority 1:
+  - get username from url
+  - send messages from message box
+  get messages to be normal strings
+
+priority 2:
+  Allow users to create rooms and enter existing rooms
+    get room name to display
+    be able to select room
+    filter user chats by room
+
+priority 3:
+  Allow users to 'befriend' other users by clicking on their user name
+    store users friends in object
+  Display all messages sent by friends in bold
+    give chats of friends a friend class
