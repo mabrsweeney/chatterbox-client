@@ -12,10 +12,11 @@ var app = {
     // console.log('fetching...');
     // $.get('http://parse.sfm6.hackreactor.com/chatterbox/classes/messages', 
     // function({results}){
-    //   for (var i = 0; i < results.length; i++) {
-    //     app.renderMessage(results[i]);
-    //   }
-    // });
+      //   for (var i = 0; i < results.length; i++) {
+        //     app.renderMessage(results[i]);
+        //   }
+        // });
+    console.log('fetching...')
     $.ajax({
       url: 'http://parse.sfm6.hackreactor.com/chatterbox/classes/messages',
       type: 'GET',
@@ -24,7 +25,9 @@ var app = {
       },
       contentType: 'json',
       success: function({results}) {
+        app.clearMessages();
         for (var i = 0; i < results.length; i++) {
+          
           app.renderMessage(results[i]);
         }
       },
@@ -87,8 +90,7 @@ $(document).ready(function(){
   console.log('document ready');
   app.init();
 
-  // setInterval(function(){
-  //   console.log('fetching...')
-  //   app.fetch();
-  // }, 2000);
+  setInterval(function(){
+    app.fetch();
+  }, 2000);
 });
