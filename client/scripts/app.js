@@ -27,7 +27,6 @@ var app = {
       success: function({results}) {
         app.clearMessages();
         for (var i = 0; i < results.length; i++) {
-          
           app.renderMessage(results[i]);
         }
       },
@@ -92,5 +91,5 @@ $(document).ready(function(){
 
   setInterval(function(){
     app.fetch();
-  }, 2000);
+  }, 5000);
 });
