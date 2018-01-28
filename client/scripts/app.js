@@ -19,7 +19,7 @@ var app = {
       app.fetch();
     }, 2000);
 
-    $('#send').on('submit', function(event){
+    $('#send').on('submit', function(event) {
       app.handleSubmit(event);
     });
 
@@ -40,7 +40,7 @@ var app = {
       },
       contentType: 'json',
       success: function({results}) {
-        if (app.latestMessageId !== results[results.length - 1].objectId){
+        if (app.latestMessageId !== results[results.length - 1].objectId) {
           app.messages = results;
           app.latestMessageId = results[results.length - 1].objectId;
           app.renderRoomList();
@@ -77,7 +77,7 @@ var app = {
     app.clearMessages();
     app.messages.filter(function(chat) {
       return app.roomname === chat.roomname;
-    }).forEach(function(chat){
+    }).forEach(function(chat) {
       app.renderMessage(chat);
     });
   },
@@ -86,7 +86,7 @@ var app = {
     var chat = $('<div class="chat"></div>');
     var usrnm = $('<a class=username></a>');
     var textElem = $('<p></p>');
-    usrnm.data('u',username);
+    usrnm.data('u', username);
     textElem.text(text);
     usrnm.text(username);
     chat.append(usrnm);
@@ -108,24 +108,24 @@ var app = {
     }
   },
   
-  handleRoomSwitch: function(){
+  handleRoomSwitch: function() {
     app.roomname = $('#roomSelect').val();
     app.renderMessages();
   },
 
   renderRoom: function(room) {
-    var newRoom = $(`<option></option>`);
+    var newRoom = $('<option></option>');
     newRoom.text(room);
     $('#roomSelect').append(newRoom);
   },
 
   handleUsernameClick: function(friend) {
-     app.friends[friend] = !app.friends[friend];
-     $('.username').each(function(){
-       if(friend === $(this).data('u')){
+    app.friends[friend] = !app.friends[friend];
+    $('.username').each(function() {
+      if (friend === $(this).data('u')) {
         $(this).css('background-color', 'lightblue');
-       }
-     });
+      }
+    });
     // console.log(app.friends);
     // var clickedUser = $('.username').filter(function(){
     //   return $(this).data('u') === friend;
